@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ahtcm.mall.dao.RatingMapper">
+
+    <select id="getList" resultType="Rating">
+        SELECT * FROM rating ORDER BY timestamp ASC
+    </select>
+
+    <select id="getListByUserId" parameterType="int" resultType="Rating">
+        SELECT * FROM rating WHERE userId = #{userId} ORDER BY timestamp ASC
+    </select>
+
+    <select id="getByIds" parameterType="java.util.HashMap" resultType="Rating">
+        SELECT * FROM rating WHERE productId = #{productId} and userId = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="Rating">
+        INSERT INTO rating (userId, productId, score, timestamp) VALUES (#{userId}, #{productId}, #{score}, #{timestamp})
+    </insert>
+
+    <update id="update" parameterType="Rating">
+        UPDATE rating SET score = #{score}, timestamp = #{timestamp} WHERE userId = #{userId} AND productId = #{productId}
+    </update>
+
+</mapper>

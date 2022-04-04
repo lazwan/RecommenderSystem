@@ -239,7 +239,7 @@ object OnlineRecommender {
   }
 
   /**
-   * 保存到 MongoDB
+   * 保存到 MySQL
    *
    * @param userId     用户 ID
    * @param streamRecs 每个备选商品的推荐优先级列表

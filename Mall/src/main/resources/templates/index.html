@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电商推荐系统</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<style>
+    .text {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1"><span
+                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                            class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a class="navbar-brand" th:href="@{/index}">电商推荐系统</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a data-toggle="modal" data-target="#register"><span
+                                    class="glyphicon glyphicon-user"></span> 注册</a>
+                        </li>
+                        <li>
+                            <a data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span>
+                                登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        热门推荐
+                    </h3>
+                </div>
+                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="hot">
+                    <div th:fragment="hot">
+                        <tr th:each="product : ${hotProducts}">
+                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
+                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: contain">
+                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
+                            </a>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        评分最多
+                    </h3>
+                </div>
+                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="statistics">
+                    <div th:fragment="statistics">
+                        <tr th:each="product : ${_rateMoreProducts}">
+                            <div th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
+                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: contain">
+                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
+                            </div>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="register" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="close" data-dismiss="modal">
+                    <span>×</span>
+                </button>
+            </div>
+            <div class="modal-title">
+                <h1 class="text-center">注册</h1>
+            </div>
+            <div class="modal-body">
+                <form class="form-group" th:action="@{/user/register}" method="post">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input class="form-control" name="username" value="" type="text" placeholder="6-15位字母或数字">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input class="form-control" name="password" value="" type="password" placeholder="至少6位字母或数字">
+                    </div>
+                    <div class="form-group">
+                        <label>再次输入密码</label>
+                        <input class="form-control" name="repassword" value="" type="password" placeholder="至少6位字母或数字">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">提交</button>
+                        <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                    </div>
+                    <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button class="close" data-dismiss="modal">
+                    <span>×</span>
+                </button>
+            </div>
+            <div class="modal-title">
+                <h1 class="text-center">登录</h1>
+            </div>
+            <div class="modal-body">
+                <form class="form-group" th:action="@{/user/login}" method="post">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input class="form-control" name="username" value="" type="text" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input class="form-control" name="password" value="" type="password" placeholder="">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit">登录</button>
+                        <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                    </div>
+                    <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function () {
+        hotRecommender();
+        statisticsRecommender();
+    });
+
+    function hotRecommender() {
+        $.ajax({
+            type: 'POST',
+            url: "/recommender/hot",
+            dataType: "text",
+            data: {
+                num: 8
+            },
+            success: function (data) {
+                $('#hot').html(data)
+            },
+        })
+    }
+
+    function statisticsRecommender() {
+        $.ajax({
+            type: 'POST',
+            url: "/recommender/statistics",
+            dataType: "text",
+            data: {
+                num: 8
+            },
+            success: function (data) {
+                $('#statistics').html(data)
+            },
+        })
+    }
+</script>
+</body>
+</html>

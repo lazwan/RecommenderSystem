@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    # MySQL 连接信息
+    url: jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+#    password: 12344
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+      add-properties: src/main/java
+      exclude: classpath:templates
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 30000
+    pool:
+      #连接池最大连接数（使用负值表示没有限制）
+      max-active: 8
+      #连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+      #连接池中的最大空闲连接
+      max-idle: 8
+      #连接池中的最小空闲连接
+      min-idle: 0
+
+# MyBatis 的相关配置
+mybatis:
+  # 搜索指定包别名
+  type-aliases-package: cn.edu.ahtcm.mall.bean
+  # 配置 mapper 的扫描，找到所有的 mapper.xml 映射文件
+  mapper-locations: classpath:mappers/*.xml
+  # 加载全局的配置文件
+  config-location: classpath:mybatis-config.xml
+
+server:
+  port: 8088
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    root: INFO
+    cn.edu.ahtcm.mall.dao: DEBUG
+    org.springframework: INFO

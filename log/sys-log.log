@@ -1,0 +1,77 @@
+00:33:20.790 [restartedMain] INFO  c.e.a.m.MallApplication - [logStarting,55] - Starting MallApplication using Java 1.8.0_321 on DESKTOP-H3ADMJC with PID 13836 (C:\Users\lazywa\Desktop\RecommenderSystem\Mall\target\classes started by lazywa in C:\Users\lazywa\Desktop\RecommenderSystem)
+00:33:20.792 [restartedMain] DEBUG c.e.a.m.MallApplication - [logStarting,56] - Running with Spring Boot v2.6.5, Spring v5.3.17
+00:33:20.793 [restartedMain] INFO  c.e.a.m.MallApplication - [logStartupProfileInfo,640] - No active profile set, falling back to 1 default profile: "default"
+00:33:20.841 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - [logTo,255] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+00:33:20.846 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - [logTo,255] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+00:33:21.441 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [multipleStoresDetected,262] - Multiple Spring Data modules found, entering strict repository configuration mode!
+00:33:21.441 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,132] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+00:33:21.454 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,201] - Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+00:33:21.466 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [multipleStoresDetected,262] - Multiple Spring Data modules found, entering strict repository configuration mode!
+00:33:21.467 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,132] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+00:33:21.476 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,201] - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+00:33:22.088 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer - [initialize,108] - Tomcat initialized with port(s): 8088 (http)
+00:33:22.105 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8088"]
+00:33:22.106 [restartedMain] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+00:33:22.107 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.60]
+00:33:22.208 [restartedMain] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+00:33:22.209 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - [prepareWebApplicationContext,290] - Root WebApplicationContext: initialization completed in 1362 ms
+00:33:22.360 [restartedMain] INFO  c.z.h.HikariDataSource - [getConnection,110] - HikariPool-1 - Starting...
+00:33:22.920 [restartedMain] INFO  c.z.h.HikariDataSource - [getConnection,123] - HikariPool-1 - Start completed.
+00:33:22.956 [restartedMain] INFO  o.h.j.i.u.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [name: default]
+00:33:22.986 [restartedMain] INFO  o.hibernate.Version - [logVersion,44] - HHH000412: Hibernate ORM core version 5.6.7.Final
+00:33:23.096 [restartedMain] INFO  o.h.a.common.Version - [<clinit>,56] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+00:33:23.204 [restartedMain] INFO  o.h.dialect.Dialect - [<init>,175] - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+00:33:23.307 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - [initiateService,52] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+00:33:23.314 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - [buildNativeEntityManagerFactory,437] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+00:33:23.664 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - [openEntityManagerInViewInterceptor,219] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+00:33:23.806 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - [<init>,57] - Adding welcome page template: index
+00:33:23.972 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - [startServer,58] - LiveReload server is running on port 35729
+00:33:23.988 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8088"]
+00:33:24.000 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer - [start,220] - Tomcat started on port(s): 8088 (http) with context path ''
+00:33:24.009 [restartedMain] INFO  c.e.a.m.MallApplication - [logStarted,61] - Started MallApplication in 3.722 seconds (JVM running for 4.611)
+00:33:24.011 [restartedMain] INFO  c.e.a.m.c.OnApplicationRunner - [run,28] - ==== Rating 存入 Redis！====
+00:33:24.770 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - ==>  Preparing: SELECT * FROM rating ORDER BY timestamp ASC
+00:33:24.789 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - ==> Parameters: 
+00:33:25.235 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - <==      Total: 44854
+00:33:28.342 [restartedMain] INFO  c.e.a.m.c.OnApplicationRunner - [run,31] - ==== Rating 存入成功！====
+00:34:05.211 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - [destroy,651] - Closing JPA EntityManagerFactory for persistence unit 'default'
+00:34:05.214 [SpringApplicationShutdownHook] INFO  c.z.h.HikariDataSource - [close,350] - HikariPool-1 - Shutdown initiated...
+00:34:05.218 [SpringApplicationShutdownHook] INFO  c.z.h.HikariDataSource - [close,352] - HikariPool-1 - Shutdown completed.
+00:34:08.565 [restartedMain] INFO  c.e.a.m.MallApplication - [logStarting,55] - Starting MallApplication using Java 1.8.0_321 on DESKTOP-H3ADMJC with PID 1656 (C:\Users\lazywa\Desktop\RecommenderSystem\Mall\target\classes started by lazywa in C:\Users\lazywa\Desktop\RecommenderSystem)
+00:34:08.568 [restartedMain] INFO  c.e.a.m.MallApplication - [logStartupProfileInfo,640] - No active profile set, falling back to 1 default profile: "default"
+00:34:08.619 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - [logTo,255] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+00:34:08.619 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - [logTo,255] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+00:34:09.365 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [multipleStoresDetected,262] - Multiple Spring Data modules found, entering strict repository configuration mode!
+00:34:09.365 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,132] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+00:34:09.379 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,201] - Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+00:34:09.390 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [multipleStoresDetected,262] - Multiple Spring Data modules found, entering strict repository configuration mode!
+00:34:09.391 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,132] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+00:34:09.401 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - [registerRepositoriesIn,201] - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+00:34:09.858 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer - [initialize,108] - Tomcat initialized with port(s): 8088 (http)
+00:34:09.872 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Initializing ProtocolHandler ["http-nio-8088"]
+00:34:09.873 [restartedMain] INFO  o.a.c.c.StandardService - [log,173] - Starting service [Tomcat]
+00:34:09.873 [restartedMain] INFO  o.a.c.c.StandardEngine - [log,173] - Starting Servlet engine: [Apache Tomcat/9.0.60]
+00:34:09.934 [restartedMain] INFO  o.a.c.c.C.[.[.[/] - [log,173] - Initializing Spring embedded WebApplicationContext
+00:34:09.934 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - [prepareWebApplicationContext,290] - Root WebApplicationContext: initialization completed in 1314 ms
+00:34:10.087 [restartedMain] INFO  c.z.h.HikariDataSource - [getConnection,110] - HikariPool-1 - Starting...
+00:34:10.610 [restartedMain] INFO  c.z.h.HikariDataSource - [getConnection,123] - HikariPool-1 - Start completed.
+00:34:10.641 [restartedMain] INFO  o.h.j.i.u.LogHelper - [logPersistenceUnitInformation,31] - HHH000204: Processing PersistenceUnitInfo [name: default]
+00:34:10.672 [restartedMain] INFO  o.hibernate.Version - [logVersion,44] - HHH000412: Hibernate ORM core version 5.6.7.Final
+00:34:10.797 [restartedMain] INFO  o.h.a.common.Version - [<clinit>,56] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+00:34:10.888 [restartedMain] INFO  o.h.dialect.Dialect - [<init>,175] - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+00:34:10.987 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - [initiateService,52] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+00:34:10.995 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - [buildNativeEntityManagerFactory,437] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+00:34:11.380 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - [openEntityManagerInViewInterceptor,219] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+00:34:11.511 [restartedMain] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - [<init>,57] - Adding welcome page template: index
+00:34:11.733 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - [startServer,58] - LiveReload server is running on port 35729
+00:34:11.750 [restartedMain] INFO  o.a.c.h.Http11NioProtocol - [log,173] - Starting ProtocolHandler ["http-nio-8088"]
+00:34:11.762 [restartedMain] INFO  o.s.b.w.e.t.TomcatWebServer - [start,220] - Tomcat started on port(s): 8088 (http) with context path ''
+00:34:11.770 [restartedMain] INFO  c.e.a.m.MallApplication - [logStarted,61] - Started MallApplication in 3.686 seconds (JVM running for 4.518)
+00:34:11.772 [restartedMain] INFO  c.e.a.m.c.OnApplicationRunner - [run,28] - ==== Rating 存入 Redis！====
+00:34:12.575 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - ==>  Preparing: SELECT * FROM rating ORDER BY timestamp ASC
+00:34:12.592 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - ==> Parameters: 
+00:34:12.893 [restartedMain] DEBUG c.e.a.m.d.R.getList - [debug,137] - <==      Total: 44854
+00:34:16.014 [restartedMain] INFO  c.e.a.m.c.OnApplicationRunner - [run,31] - ==== Rating 存入成功！====
+00:34:58.562 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - [destroy,651] - Closing JPA EntityManagerFactory for persistence unit 'default'
+00:34:58.564 [SpringApplicationShutdownHook] INFO  c.z.h.HikariDataSource - [close,350] - HikariPool-1 - Shutdown initiated...
+00:34:58.568 [SpringApplicationShutdownHook] INFO  c.z.h.HikariDataSource - [close,352] - HikariPool-1 - Shutdown completed.

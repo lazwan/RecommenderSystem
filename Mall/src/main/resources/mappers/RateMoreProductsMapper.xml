@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ahtcm.mall.dao.RateMoreProductsMapper">
+
+    <select id="getRateMore" parameterType="Integer" resultType="RateMoreProducts">
+        SELECT productId, count FROM rate_more_products ORDER BY count DESC LIMIT #{num}
+    </select>
+
+</mapper>

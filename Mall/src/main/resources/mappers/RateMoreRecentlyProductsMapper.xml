@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ahtcm.mall.dao.RateMoreRecentlyProductsMapper">
+
+    <select id="getRateMoreRecently" parameterType="Integer" resultType="RateMoreRecentlyProducts">
+        SELECT productId, count, yearmonth FROM rate_more_recently_products ORDER BY yearmonth DESC, count DESC LIMIT #{num}
+    </select>
+
+</mapper>
