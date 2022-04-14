@@ -16,5 +16,9 @@
         <!-- 使用驼峰命名法转换字段 -->
         <!-- <setting name="mapUnderscoreToCamelCase" value="true"/> -->
     </settings>
+    <!-- 搜索指定包别名 -->
+    <typeAliases>
+        <package name="cn.edu.ahtcm.mall.bean"/>
+    </typeAliases>
 
 </configuration>

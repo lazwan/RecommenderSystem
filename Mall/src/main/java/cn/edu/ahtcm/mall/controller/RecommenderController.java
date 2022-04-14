@@ -1,9 +1,6 @@
 package cn.edu.ahtcm.mall.controller;
 
-import cn.edu.ahtcm.mall.bean.Product;
-import cn.edu.ahtcm.mall.bean.RateMoreProducts;
-import cn.edu.ahtcm.mall.bean.RateMoreRecentlyProducts;
-import cn.edu.ahtcm.mall.bean.UserRecs;
+import cn.edu.ahtcm.mall.bean.*;
 import cn.edu.ahtcm.mall.service.IProductService;
 import cn.edu.ahtcm.mall.service.IRecommenderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +61,10 @@ public class RecommenderController {
         List<Integer> productIds = new ArrayList<>();
         List<Product> products = new ArrayList<>();
         try {
-            List<UserRecs> userRecs = recommenderService.getUserRecsByUserId(userId);
-            if (userRecs.size() != 0) {
-                for (UserRecs userRec : userRecs) {
-                    productIds.add(userRec.getRecsProductId());
+            List<StreamRecs> streamRecs = recommenderService.getStreamRecsByUserId(userId);
+            if (streamRecs.size() != 0) {
+                for (StreamRecs streamRec : streamRecs) {
+                    productIds.add(streamRec.getRecsProductId());
                 }
                 products = productService.getProducts(productIds);
             }
@@ -131,9 +128,23 @@ public class RecommenderController {
     }
 
     @RequestMapping("/itemcf")
-    public void itemCFRecommender() {
-
+    public ModelAndView itemCFRecommender(int productId) {
+        ModelAndView model = new ModelAndView();
+        List<Integer> productIds = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+        try {
+            List<ItemCF> itemCF = recommenderService.getItemCFByProductId(productId);
+            if (itemCF.size() != 0) {
+                for (ItemCF item : itemCF) {
+                    productIds.add(item.getRecsProductId());
+                }
+            }
+            products = productService.getProducts(productIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addObject("itemcfProducts", products);
+        model.setViewName("item::itemcf");
+        return model;
     }
-
-
 }

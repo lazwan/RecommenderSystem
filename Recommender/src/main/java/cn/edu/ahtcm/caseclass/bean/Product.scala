@@ -9,4 +9,5 @@ package cn.edu.ahtcm.caseclass.bean
  * @param imageUrl   商品图片 URL
  * @param categories 商品分类
  */
-case class Product(productId: Int, name: String, imageUrl: String, categories: String, tags: String)
+// case class Product(productId: Int, name: String, imageUrl: String, categories: String, tags: String)
+case class Product(productId: Int, name: String, price: String, imageUrl: String, categories: String)

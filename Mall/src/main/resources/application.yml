@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
 #    password: 12344
-    password: 123456
+    password: 12344
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
     cache: false
@@ -29,8 +29,6 @@ spring:
 
 # MyBatis 的相关配置
 mybatis:
-  # 搜索指定包别名
-  type-aliases-package: cn.edu.ahtcm.mall.bean
   # 配置 mapper 的扫描，找到所有的 mapper.xml 映射文件
   mapper-locations: classpath:mappers/*.xml
   # 加载全局的配置文件

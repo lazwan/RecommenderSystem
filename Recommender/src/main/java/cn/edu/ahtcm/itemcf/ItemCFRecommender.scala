@@ -64,7 +64,10 @@ object ItemCFRecommender {
       .rdd
       .groupByKey()
       .flatMap(line => {
-        val topItem = line._2.toArray.sortWith(_._2 > _._2).take(MAX_RECOMMENDATION)
+        val topItem = line._2.toArray
+          .filter(_._1 != line._1)
+          .sortWith(_._2 > _._2)
+          .take(MAX_RECOMMENDATION)
         topItem.map(item => ProductRecs(line._1, item._1, item._2))
       })
       .toDF()

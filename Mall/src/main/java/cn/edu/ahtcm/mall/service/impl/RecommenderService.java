@@ -39,6 +39,16 @@ public class RecommenderService implements IRecommenderService {
     }
 
     @Override
+    public List<StreamRecs> getStreamRecsByUserId(int userId) {
+        return recsMapper.getStreamRecs(userId);
+    }
+
+    @Override
+    public List<ItemCF> getItemCFByProductId(int productId) {
+        return recsMapper.getItemCFRecs(productId);
+    }
+
+    @Override
     public List<ProductRecs> getProductRecsByProductId(int productId) {
         return recsMapper.getProductRecs(productId);
     }

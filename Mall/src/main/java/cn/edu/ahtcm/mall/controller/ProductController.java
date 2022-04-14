@@ -10,13 +10,11 @@ import cn.edu.ahtcm.mall.service.IRecommenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,7 @@ public class ProductController {
             product.setAvgScore(avg);
             model.addObject("product", product);
 
-            // 相似推荐
+            // 相似推荐 itemcf
             List<ProductRecs> productRecs = recommenderService.getProductRecsByProductId(productId);
             if (productRecs.size() != 0) {
                 for (ProductRecs productRec : productRecs) {

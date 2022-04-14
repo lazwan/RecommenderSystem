@@ -72,10 +72,10 @@
                 <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="statistics">
                     <div th:fragment="statistics">
                         <tr th:each="product : ${_rateMoreProducts}">
-                            <div th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
+                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
                                 <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: contain">
                                 <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
-                            </div>
+                            </a>
                         </tr>
                     </div>
                 </div>

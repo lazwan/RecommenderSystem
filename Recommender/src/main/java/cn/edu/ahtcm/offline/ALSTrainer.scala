@@ -19,7 +19,7 @@ object ALSTrainer {
   def main(args: Array[String]): Unit = {
 
     // 创建一个 SparkConf
-    val sparkConf: SparkConf = new SparkConf().setMaster(config("spark.cores")).setAppName("OfflineRecommender")
+    val sparkConf: SparkConf = new SparkConf().setMaster(config("spark.cores")).setAppName("ALSTrainer")
     val spark = SparkSession.builder().config(sparkConf).getOrCreate()
 
     import spark.implicits._

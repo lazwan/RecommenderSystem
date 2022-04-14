@@ -31,6 +31,22 @@ public interface IRecommenderService {
     List<UserRecs> getUserRecsByUserId(int userId);
 
     /**
+     * 实时推荐 用户推荐表
+     *
+     * @param userId 用户 ID
+     * @return List<StreamRecs> 用户推荐表列表
+     */
+    List<StreamRecs> getStreamRecsByUserId(int userId);
+
+    /**
+     * Item-CF 商品相似度表
+     *
+     * @param productId 商品 ID
+     * @return List<ItemCF> 商品相似度表列表
+     */
+    List<ItemCF> getItemCFByProductId(int productId);
+
+    /**
      * 离线推荐 商品相似度表
      *
      * @param productId 商品 ID

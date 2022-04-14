@@ -8,6 +8,14 @@
         SELECT userId, recsProductId, score FROM user_recs WHERE userId = #{userId} ORDER BY score DESC limit 8
     </select>
 
+    <select id="getStreamRecs" parameterType="Integer" resultType="StreamRecs">
+        SELECT userId, recsProductId, score FROM stream_recs WHERE userId = #{userId} ORDER BY score DESC limit 8
+    </select>
+
+    <select id="getItemCFRecs" parameterType="Integer" resultType="ItemCF">
+        SELECT productId, recsProductId, score FROM itemcf_product_recs WHERE productId = #{productId} ORDER BY score DESC limit 8
+    </select>
+
     <select id="getProductRecs" parameterType="Integer" resultType="ProductRecs">
         SELECT productId, recsProductId, score FROM product_recs WHERE productId = #{productId} ORDER BY score DESC limit 8
     </select>

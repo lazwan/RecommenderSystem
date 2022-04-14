@@ -8,17 +8,16 @@ object DBUtils {
 
   def config: Map[String, String] = {
     Map(
-      // "spark.cores" -> "spark://192.168.10.128:7077",
-      "mysql.url" -> "jdbc:mysql://192.168.10.128:3306/recommender?useUnicode=true&characterEncoding=utf8",
-      "spark.cores" -> "local[*]"
+      "mysql.url" -> "jdbc:mysql://192.168.10.137:3306/recommender?useUnicode=true&characterEncoding=utf8",
+      "spark.cores" -> "spark://main:7077"
     )
   }
 
   def getProp: Properties ={
     val prop = new Properties()
 
-    prop.put("user", "root")
-    prop.put("password", "123456")
+    prop.put("user", "lazywa")
+    prop.put("password", "12345678")
     prop.put("driver", "com.mysql.cj.jdbc.Driver")
     prop.put("createTableColumnTypes", "CHARACTER SET utf8")
 
@@ -27,10 +26,10 @@ object DBUtils {
 
   def dbConnect(table: String): Map[String, String] = {
     val options = Map[String, String](
-      elems = "url" -> "jdbc:mysql://192.168.10.128:3306/recommender?useUnicode=true&characterEncoding=utf8",
+      elems = "url" -> "jdbc:mysql://192.168.10.137:3306/recommender?useUnicode=true&characterEncoding=utf8",
       "driver" -> "com.mysql.cj.jdbc.Driver",
-      "user" -> "root",
-      "password" -> "123456",
+      "user" -> "lazywa",
+      "password" -> "12345678",
       "dbtable" -> table
     )
     options
@@ -40,7 +39,7 @@ object DBUtils {
 
     df.write
       .mode(SaveMode.Overwrite)
-      .jdbc("jdbc:mysql://192.168.10.128:3306/recommender?useUnicode=true&characterEncoding=utf8", table, getProp)
+      .jdbc("jdbc:mysql://192.168.10.137:3306/recommender?useUnicode=true&characterEncoding=utf8", table, getProp)
 
   }
 
