@@ -32,7 +32,7 @@ public class QuartzConfig {
     public Trigger offlineJobTrigger() {
         // 0/5 * * * * ?   每隔 5 秒执行一次
         // 0 0 1 * * ?     每天一点执行一次
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 1 * * ?");
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 2 * * ?");
 
         //创建触发器
         Trigger trigger = TriggerBuilder.newTrigger()

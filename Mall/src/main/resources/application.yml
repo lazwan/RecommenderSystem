@@ -2,9 +2,9 @@ spring:
   datasource:
     # MySQL 连接信息
     url: jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
+    username: lazywa
 #    password: 12344
-    password: 12344
+    password: 12345678
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
     cache: false

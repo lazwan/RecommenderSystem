@@ -32,11 +32,9 @@ public class UserService implements IUserService {
     @Override
     public boolean register(String username, String password) {
         User user = new User();
-        user.setUserId(username.hashCode());
+        user.setUserId(userMapper.getMaxId() + 1);
         user.setUsername(username);
         user.setPassword(password);
-        user.setFirst(1);
-        user.setTimestamp(System.currentTimeMillis());
         try {
             userMapper.insert(user);
             return true;

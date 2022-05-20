@@ -9,7 +9,7 @@
     </select>
 
     <select id="getStreamRecs" parameterType="Integer" resultType="StreamRecs">
-        SELECT userId, recsProductId, score FROM stream_recs WHERE userId = #{userId} ORDER BY score DESC limit 8
+        SELECT userId, productId, score FROM stream_recs WHERE userId = #{userId} ORDER BY score DESC limit 8
     </select>
 
     <select id="getItemCFRecs" parameterType="Integer" resultType="ItemCF">

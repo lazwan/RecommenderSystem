@@ -1,67 +1,64 @@
 ## 一、环境配置
 
-### 1. 安装 MongoDB（Windows 和 CentOS 7）
+### 1. 安装 MySQL
+1. 安装
+```
+wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+rpm -ivh mysql57-community-release-el7-9.noarch.rpm
 
-> Windows 安装
+rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+yum install mysql-server
+```
 
-下载链接：[https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+2. 启动 mysql、获取安装时的临时密码
+```
+systemctl start mysqld
+cat /var/log/mysqld.log | grep 'temporary password'
+```
 
-1. 在 MongoDB 根目录创建 data 和 logs 文件夹，并在 logs 文件夹下创建空的 mongo.log 文件
-2. 在 MongoDB 根目录创建 MongoDB 的配置文件 mongo.conf
-3. 在 mongo.conf 内配置一下内容
+3. 设置密码安全等级 Low、长度(不建议)
+```
+set global validate_password_policy=0;
+set global validate_password_length=1;
+```
 
-    ```
-    # 数据库路径
-    dbpath=D:\Software\mongodb-5.0.6\data
-    # 日志输出文件路径
-    logpath=D:\Software\mongodb-5.0.6\logs\mongo.log
-    # 错误日志采用追加模式
-    logappend=true
-    # 启用日志文件，默认启用
-    journal=true
-    # 这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为false
-    quiet=true
-    # 端口号默认为 27017
-    port=27017
-    ```
+4. 修改密码、开放 root 远程登陆
+```
+ALTER USER 'root'@'localhost' IDENTIFIED BY '12345678';
+grant all privileges set password for root@localhost=password('123456');
+grant all privileges on *.* to 'lazywa' @'%' identified by '12345678';
+```
 
-4. 安装 MongoDB 服务，并运行 MongoDB 服务
-
-    ```shell
-    mongod --config "D:\Software\mongodb-5.0.6\mongo.conf" -install
-    net start mongodb
-    ```
-> CentOS 7 安装
-
-1. Create a `/etc/yum.repos.d/mongodb-org-4.4.repo` file so that you can install MongoDB directly using `yum`:
-
-    ```
-    [mongodb-org-4.4]
-    name=MongoDB Repository
-    baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.4/x86_64/
-    gpgcheck=1
-    enabled=1
-    gpgkey=https://www.mongodb.org/static/pgp/server-4.4.asc
-    ```
-
-3. Install the MongoDB packages.
-
-    ```bash
-    sudo yum install -y mongodb-org
-    ```
-
-4. Remote Connection MongoDB
-
-    Change bindIp `127.0.0.1` -> `0.0.0.0`
-
-    ```
-    vi /etc/mongod.conf
-    
-    # network interfaces
-    net:
-      port: 27017
-      bindIp: 0.0.0.0  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
-    ```
+5. my.cof
+```
+# For advice on how to change settings please see
+# http://dev.mysql.com/doc/refman/5.7/en/server-configuration-defaults.html
+[mysqld]
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+# innodb_buffer_pool_size = 128M
+#
+# Remove leading # to turn on a very important data integrity option: logging
+# changes to the binary log between backups.
+# log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+# join_buffer_size = 128M
+# sort_buffer_size = 2M
+# read_rnd_buffer_size = 2M
+port=3307
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+explicit_defaults_for_timestamp=true
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+lower_case_table_names=1
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+```
 
 ### 2. 安装 zookeeper
 
@@ -72,6 +69,8 @@
     server.0=master:2888:3888
     server.1=slave1:2888:3888
     server.2=slave2:2888:3888
+    
+    admin.serverPort=8888
     ```
 
 - 分别在每台机器的 `/opt/zookeeper/data/myid` 中填入 `id`
@@ -110,7 +109,43 @@ yum install redis
     ```
 
 ### 5. 安装 flume
+```
+agent.sources = exectail
+agent.channels = memoryChannel
+agent.sinks = kafkasink
 
+# For each one of the sources, the type is defined
+agent.sources.exectail.type = exec
+agent.sources.exectail.command = tail -f /root/log/sys-log.log
+agent.sources.exectail.interceptors=i1
+agent.sources.exectail.interceptors.i1.type=regex_filter
+agent.sources.exectail.interceptors.i1.regex=.+PRODUCT_RATING.+
+# The channel can be defined as follows.
+agent.sources.exectail.channels = memoryChannel
+
+# Each sink's type must be defined
+agent.sinks.kafkasink.type = org.apache.flume.sink.kafka.KafkaSink
+agent.sinks.kafkasink.kafka.topic = log
+agent.sinks.kafkasink.kafka.bootstrap.servers = localhost:9092
+agent.sinks.kafkasink.kafka.producer.acks = 1
+agent.sinks.kafkasink.kafka.flumeBatchSize = 20
+
+
+#Specify the channel the sink should use
+agent.sinks.kafkasink.channel = memoryChannel
+
+# Each channel's type is defined.
+agent.channels.memoryChannel.type = memory
+
+# Other config values specific to each type of channel(sink or source)
+# can be defined as well
+# In this case, it specifies the capacity of the memory channel
+agent.channels.memoryChannel.capacity = 10000
+```
+
+```shell
+./bin/flume-ng agent -c ./conf/ -f ./conf/log-kafka.properties -n agent -Dflume.root.logger=INFO,console
+```
 
 ## 二、模块介绍
 

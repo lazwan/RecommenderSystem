@@ -8,18 +8,20 @@
         SELECT id, userId, username, password, first, timestamp FROM user WHERE username = #{username}
     </select>
 
+    <select id="getMaxId" resultType="int">
+        SELECT userId FROM user ORDER BY userId DESC LIMIT 1
+    </select>
+
     <insert id="insert" parameterType="User">
         INSERT INTO user (
         <if test="userId != null and userId != '' ">userId,</if>
         <if test="username != null and username != '' ">username,</if>
         <if test="password != null and password != '' ">password,</if>
-        <if test="first != null and first != '' ">first,</if>
         timestamp
         ) values (
         <if test="userId != null and userId != ''">#{userId},</if>
         <if test="username != null and username != ''">#{username},</if>
         <if test="password != null and password != ''">#{password},</if>
-        <if test="first != null and first != ''">#{first},</if>
         sysdate()
         )
     </insert>

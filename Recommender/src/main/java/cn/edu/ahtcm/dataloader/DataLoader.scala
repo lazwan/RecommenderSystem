@@ -8,11 +8,11 @@ import org.apache.spark.sql.SparkSession
 object DataLoader {
 
   // 定义数据文件路径
-  // val PRODUCT_DATA_PATH = "Recommender/src/main/resources/products.csv"
-  // val RATING_DATA_PATH = "Recommender/src/main/resources/ratings.csv"
+  val PRODUCT_DATA_PATH = "Recommender/src/main/resources/products.csv"
+  val RATING_DATA_PATH = "Recommender/src/main/resources/ratings.csv"
 
-  val PRODUCT_DATA_PATH = "/root/products.csv"
-  val RATING_DATA_PATH = "/root/ratings.csv"
+  // val PRODUCT_DATA_PATH = "/root/products.csv"
+  // val RATING_DATA_PATH = "/root/ratings.csv"
 
   // 定义数据库中存储的表名
   val PRODUCT = "product"

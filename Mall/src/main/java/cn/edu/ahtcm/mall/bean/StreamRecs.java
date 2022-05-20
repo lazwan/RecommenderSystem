@@ -3,7 +3,7 @@ package cn.edu.ahtcm.mall.bean;
 public class StreamRecs {
 
     private int userId;
-    private int recsProductId;
+    private int productId;
     private Double score;
 
     public int getUserId() {
@@ -14,12 +14,12 @@ public class StreamRecs {
         this.userId = userId;
     }
 
-    public int getRecsProductId() {
-        return recsProductId;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setRecsProductId(int recsProductId) {
-        this.recsProductId = recsProductId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public Double getScore() {

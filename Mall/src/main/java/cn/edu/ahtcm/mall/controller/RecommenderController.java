@@ -45,7 +45,7 @@ public class RecommenderController {
             e.printStackTrace();
         }
         model.addObject("offlineProducts", products);
-        model.setViewName("index::offline");
+        model.setViewName("mall/main::offline");
         return model;
     }
 
@@ -64,7 +64,7 @@ public class RecommenderController {
             List<StreamRecs> streamRecs = recommenderService.getStreamRecsByUserId(userId);
             if (streamRecs.size() != 0) {
                 for (StreamRecs streamRec : streamRecs) {
-                    productIds.add(streamRec.getRecsProductId());
+                    productIds.add(streamRec.getProductId());
                 }
                 products = productService.getProducts(productIds);
             }
@@ -72,7 +72,7 @@ public class RecommenderController {
             e.printStackTrace();
         }
         model.addObject("onlineProducts", products);
-        model.setViewName("index::online");
+        model.setViewName("mall/main::online");
         return model;
     }
 

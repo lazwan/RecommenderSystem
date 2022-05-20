@@ -17,11 +17,16 @@ object OfflineRecommender {
 
   // 定义最大推荐个数字
   val USER_MAX_RECOMMENDATION = 20
+  val PRODUCT_MAX_RECOMMENDATION = 200
 
   def main(args: Array[String]): Unit = {
 
     // 创建一个 SparkConf
-    val sparkConf: SparkConf = new SparkConf().setMaster(config("spark.cores")).setAppName("OfflineRecommender")
+    val sparkConf: SparkConf = new SparkConf()
+      .setMaster(config("spark.cores"))
+      .set("spark.driver.memory","12g") // driver给的内存大小
+      .set("spark.executor.memory","10g") // 每个executor的内存
+      .setAppName("OfflineRecommender")
     val spark = SparkSession.builder().config(sparkConf).getOrCreate()
 
     import spark.implicits._
@@ -42,7 +47,7 @@ object OfflineRecommender {
     // 1. 训练隐语义模型
     val trainData = ratingRDD.map(x => Rating(x._1, x._2, x._3))
     // rank 是模型中隐语义因子的个数, iterations 是迭代的次数, lambda 是ALS的正则化参
-    val (rank, iterations, lambda) = (10, 10, 0.5) // 调用ALS算法训练隐语义模型
+    val (rank, iterations, lambda) = (50, 10, 0.5) // 调用ALS算法训练隐语义模型
     val model = ALS.train(trainData, rank, iterations, lambda)
 
     // 2. 获得评分矩阵，得到用户的推荐列表
@@ -81,13 +86,16 @@ object OfflineRecommender {
       .filter(_._2._2 > 0.4)
       .groupByKey()
       .flatMap(line => {
-        val topItem = line._2.toArray.sortWith(_._2 > _._2).take(USER_MAX_RECOMMENDATION)
+        val topItem = line._2.toArray.sortWith(_._2 > _._2).take(PRODUCT_MAX_RECOMMENDATION)
         topItem.map(item => ProductRecs(line._1, item._1, item._2))
       })
-      .toDF()
+      .map(x => x.productId + "," + x.recsProductId + "," + x.score)
+      .saveAsTextFile("productRecs")
+      // .toDF()
+
 
     // 存储到数据库
-    writeToDB(productRecs, PRODUCT_RECS)
+    // writeToDB(productRecs, PRODUCT_RECS)
 
     spark.stop()
   }

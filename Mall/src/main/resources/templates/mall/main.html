@@ -118,6 +118,7 @@
         hotRecommender();
         statisticsRecommender();
         offlineRecommender();
+        onlineRecommender();
     });
 
     function hotRecommender() {
@@ -158,6 +159,20 @@
             },
             success: function (data) {
                 $('#offline').html(data)
+            },
+        })
+    }
+
+    function onlineRecommender() {
+        $.ajax({
+            type: 'POST',
+            url: "/recommender/online",
+            dataType: "text",
+            data: {
+                userId: [[${user.userId}]]
+            },
+            success: function (data) {
+                $('#online').html(data)
             },
         })
     }

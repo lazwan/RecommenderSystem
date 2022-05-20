@@ -46,7 +46,7 @@ object ALSTrainer {
   }
 
   def adjustALSParams(trainingData: RDD[Rating], testingData: RDD[Rating]): Unit = {
-    val result = for (rank <- Array(5, 10, 15, 20, 25, 50); lambda <- Array(1, 0.5, 0.2, 0.1))
+    val result = for (rank <- Array(5, 10, 15, 20, 25, 50, 100, 150, 200); lambda <- Array(1, 0.5, 0.2, 0.1))
       yield {
         val model = ALS.train(trainingData, rank, 10, lambda)
         val rmse = getRMSE(model, testingData)
@@ -55,7 +55,11 @@ object ALSTrainer {
 
     // 按照 rmse 排序并输出最优参数
     logger.info(result.minBy(_._3))
+    println("=================================================================================")
+    result.foreach(println)
+    println("=================================================================================")
     println(result.minBy(_._3))
+    println("=================================================================================")
 
   }
 

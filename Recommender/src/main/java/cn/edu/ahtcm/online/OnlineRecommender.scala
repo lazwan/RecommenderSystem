@@ -4,6 +4,7 @@ import cn.edu.ahtcm.caseclass.bean.Rating
 import cn.edu.ahtcm.caseclass.recs.ProductRecs
 import cn.edu.ahtcm.utils.DBUtils.{config, dbConnect, getProp}
 import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.log4j.Logger
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
@@ -13,6 +14,8 @@ import redis.clients.jedis.Jedis
 import java.sql.DriverManager
 
 object OnlineRecommender {
+
+  private val logger = Logger.getLogger(this.getClass.getName)
 
   // 定义数据库中存储的表名
   val RATING = "rating"
@@ -26,7 +29,7 @@ object OnlineRecommender {
   def main(args: Array[String]): Unit = {
 
     // 懒变量定义，使用时初始化
-    lazy val jedis = new Jedis("192.168.10.128", 6379)
+    lazy val jedis = new Jedis("127.0.0.1", 6379)
 
     val kafkaConfig = Map(
       "kafka.topic" -> "recommender"
@@ -62,7 +65,7 @@ object OnlineRecommender {
       .groupBy(_.productId)
       // 为了后续查询相似度方便，把数据转换成map形式
       .map { item =>
-        (item._1, item._2.map(x => (x.productId, x.score)).toMap)
+        (item._1, item._2.map(x => (x.recsProductId, x.score)).toMap)
       }
       .collectAsMap()
 
@@ -86,6 +89,7 @@ object OnlineRecommender {
 
     // 对 kafkaStream 进行处理，产生评分流: userId|productId|score|timestamp
     val ratingStream = kafkaStream.map { message =>
+      println("\n\n\n\n\n\n\n\n" + message + "\n\n\n\n\n\n\n\n")
       var attr = message.value().split("\\|")
       (attr(0).toInt, attr(1).toInt, attr(2).toDouble, attr(3).toInt)
     }
@@ -95,20 +99,27 @@ object OnlineRecommender {
       rdds =>
         rdds.foreach {
           case (userId, productId, score, timestamp) =>
-            print("rating data coming! ==> ")
+            println("\n\n\n\n <<<<<<<<<<<<<<<<<<<<<<<< rating data coming! >>>>>>>>>>>>>>>>>>>>>>>>>>>> \n\n\n\n")
             println(userId, productId, score, timestamp)
 
             // 1. 从redis里取出当前用户的最近评分，保存成一个数组 Array[(productId, score)]
             val userRecentlyRatings = getUserRecentlyRatings(MAX_USER_RATING, userId, jedis)
+            println("\n\n====== userRecentlyRatings ======\n\n")
+            userRecentlyRatings.foreach(println)
 
             // 2. 从相似度矩阵中获取当前商品最相似的商品列表，作为备选列表，保存成一个数组Array[productId]
             val candidateProducts = getTopSimProducts(MAX_SIM_PRODUCTS, productId, userId, simProcutsMatrixBC.value, ratingMap)
+            println("\n\n====== candidateProducts ======\n\n")
+            candidateProducts.foreach(println)
 
             // 3. 计算每个备选商品的推荐优先级，得到当前用户的实时推荐列表，保存成 Array[(productId, score)]
             val streamRecs = computeProductScore(candidateProducts, userRecentlyRatings, simProcutsMatrixBC.value)
 
+            println("\n\n====== streamRecs ======\n\n")
+            streamRecs.foreach(println)
+
             // 4. 把推荐列表保存到mongodb
-            saveDataToMongoDB(userId, streamRecs)
+            saveDataToDB(userId, streamRecs)
         }
     }
 
@@ -244,14 +255,17 @@ object OnlineRecommender {
    * @param userId     用户 ID
    * @param streamRecs 每个备选商品的推荐优先级列表
    */
-  def saveDataToMongoDB(userId: Int, streamRecs: Array[(Int, Double)]): Unit = {
+  def saveDataToDB(userId: Int, streamRecs: Array[(Int, Double)]): Unit = {
 
     val connection = DriverManager.getConnection(config("mysql.url"), getProp)
     var sql = "delete from " + STREAM_RECS + " where userId = " + userId
+    logger.info(sql)
     connection.prepareStatement(sql).executeUpdate()
 
     streamRecs.flatMap(item => {
       sql = "insert into " + STREAM_RECS + " (userId, productId, score) values (" + userId + ", " + item._1 + ", " + item._2 + ")"
+      logger.info(sql)
+
       connection.prepareStatement(sql).executeUpdate()
       None
     })

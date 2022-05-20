@@ -14,4 +14,6 @@ public interface UserMapper {
     void update(User user);
 
     void deleteById(Long id);
+
+    int getMaxId();
 }
