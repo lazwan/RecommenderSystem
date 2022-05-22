@@ -36,7 +36,7 @@ object OnlineRecommender {
     )
 
     // 创建 spark conf
-    val sparkConf = new SparkConf().setMaster(config("spark.cores")).setAppName("OnlineRecommender")
+    val sparkConf = new SparkConf().setMaster("local[*]").setAppName("OnlineRecommender")
     val spark = SparkSession.builder().config(sparkConf).getOrCreate()
     val sc = spark.sparkContext
     val ssc = new StreamingContext(sc, Seconds(2))
@@ -74,7 +74,7 @@ object OnlineRecommender {
 
     // 创建 kafka 配置参数
     val kafkaParam = Map(
-      "bootstrap.servers" -> "localhost:9092",
+      "bootstrap.servers" -> "master:9092",
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
       "group.id" -> "recommender",
@@ -89,7 +89,7 @@ object OnlineRecommender {
 
     // 对 kafkaStream 进行处理，产生评分流: userId|productId|score|timestamp
     val ratingStream = kafkaStream.map { message =>
-      println("\n\n\n\n\n\n\n\n" + message + "\n\n\n\n\n\n\n\n")
+      println("\n\n" + message + "\n\n")
       var attr = message.value().split("\\|")
       (attr(0).toInt, attr(1).toInt, attr(2).toDouble, attr(3).toInt)
     }
@@ -99,23 +99,23 @@ object OnlineRecommender {
       rdds =>
         rdds.foreach {
           case (userId, productId, score, timestamp) =>
-            println("\n\n\n\n <<<<<<<<<<<<<<<<<<<<<<<< rating data coming! >>>>>>>>>>>>>>>>>>>>>>>>>>>> \n\n\n\n")
+            println("\n\n <<<<<<<<<<<<<<<<<<<<<<<< rating data coming! >>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
             println(userId, productId, score, timestamp)
 
             // 1. 从redis里取出当前用户的最近评分，保存成一个数组 Array[(productId, score)]
             val userRecentlyRatings = getUserRecentlyRatings(MAX_USER_RATING, userId, jedis)
-            println("\n\n====== userRecentlyRatings ======\n\n")
+            println("\n====== userRecentlyRatings ======")
             userRecentlyRatings.foreach(println)
 
             // 2. 从相似度矩阵中获取当前商品最相似的商品列表，作为备选列表，保存成一个数组Array[productId]
             val candidateProducts = getTopSimProducts(MAX_SIM_PRODUCTS, productId, userId, simProcutsMatrixBC.value, ratingMap)
-            println("\n\n====== candidateProducts ======\n\n")
+            println("\n====== candidateProducts ======")
             candidateProducts.foreach(println)
 
             // 3. 计算每个备选商品的推荐优先级，得到当前用户的实时推荐列表，保存成 Array[(productId, score)]
             val streamRecs = computeProductScore(candidateProducts, userRecentlyRatings, simProcutsMatrixBC.value)
 
-            println("\n\n====== streamRecs ======\n\n")
+            println("\n====== streamRecs ======")
             streamRecs.foreach(println)
 
             // 4. 把推荐列表保存到mongodb
@@ -197,7 +197,7 @@ object OnlineRecommender {
     for (candidateProduct <- candidateProducts; userRecentlyRating <- userRecentlyRatings) {
       // 从相似度矩阵中获取当前备选商品和当前已评分商品间的相似度
       val simScore = getProductsSimScore(candidateProduct, userRecentlyRating._1, simProducts)
-      println("相似度 =>" + simScore)
+      println("相似度 => " + simScore)
       if (simScore > 0.4) {
         // 按照公式进行加权计算，得到基础评分
         scores += ((candidateProduct, simScore * userRecentlyRating._2))

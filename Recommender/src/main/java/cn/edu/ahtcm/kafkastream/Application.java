@@ -9,8 +9,8 @@ import java.util.Properties;
 public class Application {
 
     public static void main(String[] args) {
-        String brokers = "localhost:9092";
-        String zookeepers = "localhost:2181";
+        String brokers = "master:9092";
+        String zookeepers = "master:2181";
 
         // 定义输入输出的 topic
         String from = "log";

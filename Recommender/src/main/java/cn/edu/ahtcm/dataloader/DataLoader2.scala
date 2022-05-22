@@ -7,10 +7,10 @@ import org.apache.spark.sql.SparkSession
 object DataLoader2 {
 
   // 定义数据文件路径
-  val PRODUCT_DATA_PATH = "Recommender/src/main/resources/meta_Amazon_Fashion.csv"
-  val RATING_DATA_PATH = "Recommender/src/main/resources/ratings_Amazon_Fashion.csv"
-  // val PRODUCT_DATA_PATH = "/dataset/meta_Sports_and_Outdoors.csv"
-  // val RATING_DATA_PATH = "/dataset/ratings_Sports_and_Outdoors.csv"
+  // val PRODUCT_DATA_PATH = "Recommender/src/main/resources/meta_Amazon_Fashion.csv"
+  // val RATING_DATA_PATH = "Recommender/src/main/resources/ratings_Amazon_Fashion.csv"
+  val PRODUCT_DATA_PATH = "/dataset/meta_Sports_and_Outdoors.csv"
+  val RATING_DATA_PATH = "/dataset/ratings_Sports_and_Outdoors.csv"
 
   // 定义 MongoDB 中存储的表名
   val PRODUCT = "product"

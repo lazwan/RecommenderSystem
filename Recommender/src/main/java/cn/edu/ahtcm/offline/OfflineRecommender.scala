@@ -24,8 +24,6 @@ object OfflineRecommender {
     // 创建一个 SparkConf
     val sparkConf: SparkConf = new SparkConf()
       .setMaster(config("spark.cores"))
-      .set("spark.driver.memory","12g") // driver给的内存大小
-      .set("spark.executor.memory","10g") // 每个executor的内存
       .setAppName("OfflineRecommender")
     val spark = SparkSession.builder().config(sparkConf).getOrCreate()
 

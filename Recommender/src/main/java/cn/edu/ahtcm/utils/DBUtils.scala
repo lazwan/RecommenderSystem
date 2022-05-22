@@ -8,7 +8,7 @@ object DBUtils {
 
   def config: Map[String, String] = {
     Map(
-      "mysql.url" -> "jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=utf8",
+      "mysql.url" -> "jdbc:mysql://master:3306/recommender?useUnicode=true&characterEncoding=utf8",
       "spark.cores" -> "spark://master:7077"
     )
   }
@@ -26,7 +26,7 @@ object DBUtils {
 
   def dbConnect(table: String): Map[String, String] = {
     val options = Map[String, String](
-      elems = "url" -> "jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=utf8",
+      elems = "url" -> "jdbc:mysql://master:3306/recommender?useUnicode=true&characterEncoding=utf8",
       "driver" -> "com.mysql.cj.jdbc.Driver",
       "user" -> "lazywa",
       "password" -> "12345678",
@@ -39,7 +39,7 @@ object DBUtils {
 
     df.write
       .mode(SaveMode.Overwrite)
-      .jdbc("jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=utf8", table, getProp)
+      .jdbc("jdbc:mysql://master:3306/recommender?useUnicode=true&characterEncoding=utf8", table, getProp)
 
   }
 

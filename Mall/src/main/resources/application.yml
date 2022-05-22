@@ -1,7 +1,7 @@
 spring:
   datasource:
     # MySQL 连接信息
-    url: jdbc:mysql://localhost:3306/recommender?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://192.168.10.128:3306/recommender?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: lazywa
 #    password: 12344
     password: 12345678
@@ -35,7 +35,7 @@ mybatis:
   config-location: classpath:mybatis-config.xml
 
 server:
-  port: 8088
+  port: 8099
   tomcat:
     uri-encoding: UTF-8
   servlet:

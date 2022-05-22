@@ -44,40 +44,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        实时推荐
-                    </h3>
-                </div>
-                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="online">
-                    <div th:fragment="online">
-                        <tr th:each="product : ${onlineProducts}">
-                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
-                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: cover">
-                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
-                            </a>
-                        </tr>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        离线推荐
-                    </h3>
-                </div>
-                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="offline">
-                    <div th:fragment="offline">
-                        <tr th:each="product : ${offlineProducts}">
-                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
-                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: cover">
-                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
-                            </a>
-                        </tr>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
                         热门推荐
                     </h3>
                 </div>
@@ -103,6 +69,40 @@
                         <tr th:each="product : ${_rateMoreProducts}">
                             <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
                                 <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: contain">
+                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
+                            </a>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        实时推荐
+                    </h3>
+                </div>
+                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="online">
+                    <div th:fragment="online">
+                        <tr th:each="product : ${onlineProducts}">
+                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
+                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: cover">
+                                <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
+                            </a>
+                        </tr>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        离线推荐
+                    </h3>
+                </div>
+                <div class="panel-body" style="text-align: center; width: 100%; height: auto" th:id="offline">
+                    <div th:fragment="offline">
+                        <tr th:each="product : ${offlineProducts}">
+                            <a th:href="@{'/product/page?productId=' + ${product.productId}}" style="width: 24%; height: 250px; float: left; margin: 20px 5px 10px 5px;">
+                                <img th:src="${product.imageUrl}" style="width: 200px; height: 200px; margin: 0 0 0 0; object-fit: cover">
                                 <span class="text" style="padding-top: 10px;" th:text="${product.name}"></span>
                             </a>
                         </tr>
