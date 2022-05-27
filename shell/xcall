@@ -1,0 +1,51 @@
+#!/bin/bash
+case $1 in 
+"jps") {
+	echo "====== jps on master ======"
+	jps
+	echo "====== jps on slave1 ======"
+	ssh slave1 "source /etc/profile; jps"
+	echo "====== jps on slave2 ======"
+	ssh slave2 "source /etc/profile; jps"
+};;
+"poweroff") {
+	echo "====== jps on slave1 ======"
+	ssh slave1 "source /etc/profile; poweroff"
+	echo "====== jps on slave2 ======"
+	ssh slave2 "source /etc/profile; poweroff"
+	echo "====== jps on master ======"
+	poweroff
+};;
+"start_zk") {
+	echo "====== start_zk on master ======"
+	/root/command start zk
+	echo "====== start_zk on slave1 ======"
+	ssh slave1 "source /etc/profile; /root/command start zk"
+	echo "====== start_zk on slave2 ======"
+	ssh slave2 "source /etc/profile; /root/command start zk"
+};;
+"stop_zk") {
+	echo "====== stop_zk on master ======"
+	/root/command stop zk
+	echo "====== stop_zk on slave1 ======"
+	ssh slave1 "source /etc/profile; /root/command stop zk"
+	echo "====== stop_zk on slave2 ======"
+	ssh slave2 "source /etc/profile; /root/command stop zk"
+};;
+"start_kafka") {
+	echo "====== start_kafka on master ======"
+	/root/command start kafka
+	echo "====== start_kafka on slave1 ======"
+	ssh slave1 "source /etc/profile; /root/command start kafka"
+	echo "====== start_kafka on slave2 ======"
+	ssh slave2 "source /etc/profile; /root/command start kafka"
+};;
+"stop_kafka") {
+	echo "====== stop_kafka on master ======"
+	/root/command stop kafka
+	echo "====== stop_kafka on slave1 ======"
+	ssh slave1 "source /etc/profile; /root/command stop kafka"
+	echo "====== stop_kafka on slave2 ======"
+	ssh slave2 "source /etc/profile; /root/command stop kafka"
+};;
+esac

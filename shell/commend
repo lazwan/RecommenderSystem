@@ -1,0 +1,49 @@
+#!/bin/bash
+
+case $1 in 
+"start") {
+	case $2 in 
+	"hadoop") {
+		echo " ====== start hadoop ====== "
+		/opt/hadoop/sbin/start-all.sh
+	};;
+	"spark") {
+		echo " ====== start spark ====== "
+		/opt/spark/sbin/start-all.sh
+	};;
+	"zk") {
+		echo " ====== start zooleeper ====== "
+		/opt/zookeeper/bin/zkServer.sh start
+	};;
+	"kafka") {
+		echo " ====== start kafka ====== "
+		/opt/kafka/bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties
+	};;
+	"flume") {
+		echo " ====== start flume ====== "
+		/opt/flume/bin/flume-ng agent -c /opt/flume/conf/ -f /opt/flume/conf/log-kafka.properties  -n agent  -Dflume.root.logger=INFO,console
+	};;
+	esac
+};;
+
+"stop") {
+	case $2 in 
+	"hadoop") {
+		echo " ====== stop hadoop ====== "
+		/opt/hadoop/sbin/stop-all.sh
+	};;
+	"spark") {
+		echo " ====== stop spark ====== "
+		/opt/spark/sbin/stop-all.sh
+	};;
+	"zk") {
+		echo " ====== stop zooleeper ====== "
+		/opt/zookeeper/bin/zkServer.sh stop
+	};;
+	"kafka") {
+		echo " ====== stop kafka ====== "
+		/opt/kafka/bin/kafka-server-stop.sh
+	};;
+	esac
+};;
+esac

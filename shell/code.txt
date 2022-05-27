@@ -1,0 +1,71 @@
+spark-submit \
+	--class cn.edu.ahtcm.dataloader.DataLoader2 \
+	--master spark://master:7077 \
+	--executor-memory 3g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+	
+spark-submit \
+	--class cn.edu.ahtcm.statistics.StatisticsRecommender \
+	--master spark://master:7077 \
+	--executor-memory 3g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+spark-submit \
+	--class cn.edu.ahtcm.offline.OfflineRecommender \
+	--master spark://master:7077 \
+	--executor-memory 3g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+spark-submit \
+	--class cn.edu.ahtcm.offline.ALSTrainer \
+	--master spark://master:7077 \
+	--executor-memory 3g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+spark-submit \
+	--class cn.edu.ahtcm.online.OnlineRecommender \
+	--executor-memory 5g \
+	--driver-memory 5g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+	
+java -jar Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar cn.edu.ahtcm.kafkastream.Application
+	
+spark-submit \
+	--class cn.edu.ahtcm.itemcf.ItemCFRecommender \
+	--master spark://master:7077 \
+	--executor-memory 3g \
+	Recommender-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+
+/opt/flume/bin/flume-ng agent \
+ -c /opt/flume/conf/ \
+ -f /opt/flume/conf/log-kafka.properties  \
+ -n agent  \
+ -Dflume.root.logger=INFO,console
+
+
+
+
+lpush userId:4867 231449:3.0 250451:3.0 294209:1.0 457976:5.0 425715:5.0
+
+lpush userId:60 652:2.0 834:5.0
+lpush userId:60 491:2.0 335:3.0 943:5.0
+
+lpush userId:9 511015:5.0 154318:3.0 75701:5.0 6792:5.0 326582:4.0
+9|32512|5.0|1648357739
+
+/opt/kafka/bin/kafka-console-producer.sh --broker-list master:9092 --topic recommender
+60|654|3.0|1648112090
+60|655|4.0|1648123056
+
+4867|286997|4.0|1648123056
+308806|245008|5.0|1652954728
+
+
+export SPARK_MASTER_IP=master
+export SPARK_MASTER_PORT=7077
+export SPARK_WORKER_CORES=4
+export SPARK_WORKER_INSTANCES=1
+export SPARK_WORKER_MEMORY=4g
+export HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+export JAVA_HOME=/opt/jdk
